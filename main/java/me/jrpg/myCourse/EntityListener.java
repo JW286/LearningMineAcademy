@@ -13,19 +13,23 @@ import org.bukkit.inventory.EquipmentSlot;
 public class EntityListener implements Listener {
 
     /**
-     * @param event Represents the entity that you are interacting with
+     * @param entity Represents the entity that you are interacting with
      */
     @EventHandler
-    public void onMobRightClick(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked().getType() == EntityType.CHICKEN && event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-            //If a player interacts with a chicken this will occur
-            if (!event.getRightClicked().isGlowing()) {
-                event.getRightClicked().setGlowing(true);
-                event.getPlayer().sendMessage("Glowing");
+    public void onEntityClick(PlayerInteractEntityEvent entity) {
+        //Send Entity Name
+        if (entity.getHand().equals(EquipmentSlot.OFF_HAND)){
+            entity.getPlayer().sendMessage(entity.getRightClicked().getType().toString());
+        }
+        //Chicken
+        if (entity.getRightClicked().getType() == EntityType.CHICKEN && entity.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            if (!entity.getRightClicked().isGlowing()) {
+                entity.getRightClicked().setGlowing(true);
+                entity.getPlayer().sendMessage("Glowing");
             }
             else {
-                event.getRightClicked().setGlowing(false);
-                event.getPlayer().sendMessage("Not Glowing");
+                entity.getRightClicked().setGlowing(false);
+                entity.getPlayer().sendMessage("Not Glowing");
             }
         }
     }
